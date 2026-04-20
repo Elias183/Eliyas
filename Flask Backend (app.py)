@@ -1,0 +1,39 @@
+from flask import Flask, request, jsonify, render_template
+from models import init_db, add_item, record_incoming, record_sale, get_items, get_alerts, generate_report
+
+app = Flask(__name__)
+init_db()
+
+@app.route("/")
+def home():
+    return render_template("dashboard.html", items=get_items(), alerts=get_alerts())
+
+@app.route("/items", methods=["POST"])
+def items():
+    data = request.json
+    add_item(data["name"], data["starting_qty"], data["threshold"])
+    return jsonify({"message": "Item added successfully"})
+
+@app.route("/incoming", methods=["POST"])
+def incoming():
+    data = request.json
+    record_incoming(data["item_id"], data["qty"])
+    return jsonify({"message": "Incoming stock recorded"})
+
+@app.route("/sales", methods=["POST"])
+def sales():
+    data = request.json
+    success, msg = record_sale(data["item_id"], data["qty"])
+    return jsonify({"message": msg}), (200 if success else 400)
+
+@app.route("/alerts", methods=["GET"])
+def alerts():
+    return jsonify(get_alerts())
+
+@app.route("/reports", methods=["GET"])
+def reports():
+    path = generate_report()
+    return jsonify({"report": path})
+
+if __name__ == "__main__":
+    app.run(debug=True)
