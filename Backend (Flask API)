@@ -1,0 +1,3 @@
+@app.route("/")
+def home():
+    return "Stock Management System is running!"
