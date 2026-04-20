@@ -1,0 +1,7 @@
+Eliyas/
+│── app.py              # Flask backend
+│── models.py           # SQLite schema + validation
+│── database.db         # Auto‑created SQLite file
+│── requirements.txt    # Dependencies
+│── static/             # CSS/JS for frontend
+│── templates/          # HTML dashboard
