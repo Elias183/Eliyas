@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stock Dashboard</title>
+</head>
+<body>
+  <h1>Stock Management System</h1>
+  <h2>Items</h2>
+  <ul>
+    {% for item in items %}
+      <li>{{ item[1] }} - Starting: {{ item[2] }}</li>
+    {% endfor %}
+  </ul>
+  <h2>Alerts</h2>
+  <ul>
+    {% for alert in alerts %}
+      <li>{{ alert.item }} is low ({{ alert.remaining }} left)</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
